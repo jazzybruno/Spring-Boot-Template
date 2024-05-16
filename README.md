@@ -42,10 +42,19 @@ mvn clean install
 ```bash
 mvn spring-boot:run
 ```
- - Access the project :
+-  You can also run it with docker :
+```bash
+  docker build -t <image_name> .
+  docker run -p <desired port>:<desired port> <image_name>
+```
+- Access the project :
 ```bash
 http://localhost:<desired port>/swagger-ui.html
 ```
 
+ - Then in the browser you will get a page like this :
+
+ ![img.png](img.png)
 ## License
-No license
+Apache License 2.0
+
