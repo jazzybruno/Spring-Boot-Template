@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centrika Document Review App Invitation</title>
+    <style>
+        body {
+            font-family: 'Garamond', sans-serif;
+            margin: 10px;
+            padding: 0;
+        }
+
+
+        table {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        td {
+            padding: 40px;
+            text-align: center;
+        }
+
+        img {
+            display: block;
+            margin: 0 auto 20px;
+            max-width: 100%;
+            height: auto;
+        }
+
+        h2 {
+            color: rgba(56,76,162,255);
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: rgba(56,76,162,255);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor : pointer;
+
+        }
+
+        /* Additional Styles for a more pleasing design */
+        .content {
+            padding: 20px;
+        }
+
+        .footer {
+            background-color: rgba(56,76,162,0.8);
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 0 0 8px 8px;
+        }
+
+        /* Responsive Styles */
+        @media screen and (max-width: 600px) {
+            table {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header-container">
+
+    <table cellpadding="0" cellspacing="0" border="0">
+        <tr>
+            <td class="content">
+                <img src="https://res.cloudinary.com/brunosite/image/upload/v1704192781/centrika/eoko76wpb53pgycifxow.png" />
+                <h2>Centrika Document Review Application</h2>
+                <h3>Hello <span th:text="${name}"></span></h3>
+                <p>Welcome to Centrika Document Review Application Click the button below to activate your account</p>
+                <a th:href="${link}" >Verify Email</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="footer">
+                &copy; 2024 Centrika Document Review App. All rights reserved.
+            </td>
+        </tr>
+    </table>
+    </div>
+</body>
+</html>

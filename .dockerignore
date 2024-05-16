@@ -1,0 +1,10 @@
+
+# Exclude test-related files
+test/
+
+# Exclude IDE configuration files
+.idea/
+.vscode/
+
+# Exclude local development files
+*.log
