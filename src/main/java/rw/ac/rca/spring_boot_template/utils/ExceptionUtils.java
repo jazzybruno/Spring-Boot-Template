@@ -2,6 +2,7 @@ package rw.ac.rca.spring_boot_template.utils;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import rw.ac.rca.spring_boot_template.exceptions.*;
 
 public class ExceptionUtils {
@@ -30,6 +31,12 @@ public class ExceptionUtils {
                     e.getMessage(),
                     e,
                     HttpStatus.INTERNAL_SERVER_ERROR
+            ).toResponseEntity();
+        } else if (e instanceof BadCredentialsException) {
+            return ApiResponse.error(
+                    e.getMessage(),
+                    e,
+                    HttpStatus.BAD_REQUEST
             ).toResponseEntity();
         } else if(e instanceof BadRequestAlertException){
             return ApiResponse.error(
