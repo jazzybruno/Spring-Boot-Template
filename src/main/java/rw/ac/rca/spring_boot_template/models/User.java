@@ -35,7 +35,7 @@ public class User {
     private String firstName;
     private String lastName;
     @Transient
-    private String fullName = firstName + " " + lastName;
+    private String fullName;
     private String nationalId;
     private Date dateOfBirth;
     @Column(name = "phone_number")

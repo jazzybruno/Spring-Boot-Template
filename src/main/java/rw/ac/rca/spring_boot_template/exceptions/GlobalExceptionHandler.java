@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import rw.ac.rca.spring_boot_template.utils.ApResponse;
+import rw.ac.rca.spring_boot_template.utils.ApiResponse;
+import rw.ac.rca.spring_boot_template.utils.ExceptionUtils;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -32,17 +33,22 @@ public class GlobalExceptionHandler {
         this.messageSource = messageSource;
     }
 
+    @ExceptionHandler(CustomException.class)
+    public ResponseEntity<?> customException(CustomException ex){
+        return ExceptionUtils.handleControllerExceptions(ex.getException());
+    }
+
     @ExceptionHandler(BadCredentialsException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ResponseEntity<?> badCredentialsException(BadCredentialsException ex, Locale locale) {
-        return new ApResponse<>(messageSource.getMessage("exceptions.invalidCredentials", null, locale), (Object) "", HttpStatus.UNAUTHORIZED).toResponseEntity();
+        return new ApiResponse<>(messageSource.getMessage("exceptions.invalidCredentials", null, locale), (Object) "", HttpStatus.UNAUTHORIZED).toResponseEntity();
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<?> resourceNotFoundException(ResourceNotFoundException ex, Locale locale) {
         String errorMessage = messageSource.getMessage(ex.getMessage(), ex.getArgs(), locale);
-        return new ApResponse<>(errorMessage, (Object) "", HttpStatus.NOT_FOUND).toResponseEntity();
+        return new ApiResponse<>(errorMessage, (Object) "", HttpStatus.NOT_FOUND).toResponseEntity();
     }
 
 
@@ -50,14 +56,14 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<?> badRequestAlert(BadRequestAlertException ex, Locale locale) {
         String errorMessage = messageSource.getMessage(ex.getMessage(), ex.getArgs(), locale);
-        return new ApResponse<>(errorMessage, (Object) "", HttpStatus.BAD_REQUEST).toResponseEntity();
+        return new ApiResponse<>(errorMessage, (Object) "", HttpStatus.BAD_REQUEST).toResponseEntity();
     }
 
     @ExceptionHandler(UnAuthorizedException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ResponseEntity<?> unAuthorizedException(UnAuthorizedException ex, Locale locale) {
         String errorMessage = messageSource.getMessage(ex.getMessage(), ex.getArgs(), locale);
-        return new ApResponse<>(errorMessage, (Object) "", HttpStatus.UNAUTHORIZED).toResponseEntity();
+        return new ApiResponse<>(errorMessage, (Object) "", HttpStatus.UNAUTHORIZED).toResponseEntity();
     }
 
     @ExceptionHandler(AccessDeniedException.class)
@@ -65,13 +71,13 @@ public class GlobalExceptionHandler {
     public  ResponseEntity<?> handlerAccessDeniedException(final Exception ex,
                                                            final HttpServletRequest request, final HttpServletResponse response) {
 
-        return new ApResponse<>(ex.getMessage(), (Object) "", HttpStatus.UNAUTHORIZED).toResponseEntity();
+        return new ApiResponse<>(ex.getMessage(), (Object) "", HttpStatus.UNAUTHORIZED).toResponseEntity();
     }
 
     @ExceptionHandler(DuplicateRecordException.class)
     public ResponseEntity<?> duplicateRecordException(DuplicateRecordException ex, Locale locale) {
         String errorMessage = messageSource.getMessage(ex.getMessage(), ex.getArgs(), locale);
-        return new ApResponse<>(errorMessage, (Object) "", HttpStatus.BAD_REQUEST).toResponseEntity();
+        return new ApiResponse<>(errorMessage, (Object) "", HttpStatus.BAD_REQUEST).toResponseEntity();
     }
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<?>  handleMethodArgumentNotValid(MethodArgumentNotValidException ex, Locale locale) throws JsonProcessingException {
@@ -84,7 +90,7 @@ public class GlobalExceptionHandler {
         });
 
         String errorMessage = messageSource.getMessage("exceptions.validation.message", null, locale);
-        return new ApResponse<>(errorMessage, errors, HttpStatus.BAD_REQUEST).toResponseEntity();
+        return new ApiResponse<>(errorMessage, errors, HttpStatus.BAD_REQUEST).toResponseEntity();
     }
 
     @ExceptionHandler(Exception.class)
@@ -102,7 +108,7 @@ public class GlobalExceptionHandler {
         }
 
         String errorMessage = messageSource.getMessage("exceptions.validation.server", null, locale);
-        return new ApResponse<>(errorMessage, error, HttpStatus.INTERNAL_SERVER_ERROR).toResponseEntity();
+        return new ApiResponse<>(errorMessage, error, HttpStatus.INTERNAL_SERVER_ERROR).toResponseEntity();
     }
 }
 

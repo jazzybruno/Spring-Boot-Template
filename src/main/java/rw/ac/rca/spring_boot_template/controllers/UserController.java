@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import rw.ac.rca.spring_boot_template.dtos.requests.*;
 import rw.ac.rca.spring_boot_template.models.User;
 import rw.ac.rca.spring_boot_template.services.UserService;
-import rw.ac.rca.spring_boot_template.utils.ApiResponse;
 
 import java.util.List;
 import java.util.UUID;

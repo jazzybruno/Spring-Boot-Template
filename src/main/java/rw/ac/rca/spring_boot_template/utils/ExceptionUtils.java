@@ -5,40 +5,45 @@ import org.springframework.http.ResponseEntity;
 import rw.ac.rca.spring_boot_template.exceptions.*;
 
 public class ExceptionUtils {
-    public static  <T> ResponseEntity<ApiResponse> handleControllerExceptions(Exception e) {
-        System.out.println("Exception caught in controller:");
+    public static  <T> ResponseEntity<ApiResponse<Object>> handleControllerExceptions(Exception e) {
 
         if (e instanceof NotFoundException) {
-            return new ResponseEntity<>(new ApiResponse(
-                    false,
-                    e.getMessage()
-            ), HttpStatus.NOT_FOUND);
+            return ApiResponse.error(
+                    e.getMessage(),
+                    e,
+                    HttpStatus.NOT_FOUND
+            ).toResponseEntity();
         } else if(e instanceof InvalidUUIDException){
-            return new ResponseEntity<>(new ApiResponse(
-                    false,
-                    e.getMessage()
-            ), HttpStatus.BAD_REQUEST);
+            return ApiResponse.error(
+                    e.getMessage(),
+                    e,
+                    HttpStatus.BAD_REQUEST
+            ).toResponseEntity();
         }else if(e instanceof ResourceNotFoundException){
-            return new ResponseEntity<>(new ApiResponse(
-                    false,
-                    e.getMessage()
-            ), HttpStatus.NOT_FOUND);
+            return ApiResponse.error(
+                    e.getMessage(),
+                    e,
+                    HttpStatus.NOT_FOUND
+            ).toResponseEntity();
         }else if (e instanceof InternalServerErrorException) {
-            return new ResponseEntity<>(new ApiResponse(
-                    false,
-                    e.getMessage()
-            ), HttpStatus.INTERNAL_SERVER_ERROR);
+            return ApiResponse.error(
+                    e.getMessage(),
+                    e,
+                    HttpStatus.INTERNAL_SERVER_ERROR
+            ).toResponseEntity();
         } else if(e instanceof BadRequestAlertException){
-            return new ResponseEntity<>(new ApiResponse(
-                    false,
-                    e.getMessage()
-            ), HttpStatus.BAD_REQUEST);
+            return ApiResponse.error(
+                    e.getMessage(),
+                    e,
+                    HttpStatus.BAD_REQUEST
+            ).toResponseEntity();
         }else {
             // Handle other exceptions as needed
-            return new ResponseEntity<>(new ApiResponse(
-                    false,
-                    e.getMessage()
-            ), HttpStatus.INTERNAL_SERVER_ERROR);
+            return ApiResponse.error(
+                    e.getMessage(),
+                    e,
+                    HttpStatus.INTERNAL_SERVER_ERROR
+            ).toResponseEntity();
         }
     }
 
