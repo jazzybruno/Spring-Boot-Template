@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rw.ac.rca.spring_boot_template.dtos.requests.*;
+import rw.ac.rca.spring_boot_template.models.Role;
 import rw.ac.rca.spring_boot_template.models.User;
 import rw.ac.rca.spring_boot_template.services.UserService;
+import rw.ac.rca.spring_boot_template.utils.ApiResponse;
 
 import java.util.List;
 import java.util.UUID;
@@ -23,98 +25,60 @@ public class UserController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity getAllUsers() {
+    public ResponseEntity<ApiResponse<List<User>>> getAllUsers() {
         List<User> users = userService.getAllUsers();
-        return ResponseEntity.ok().body(new ApiResponse(
-                true,
-                "Successfully fetched the users",
-                users
-        ));
+        return ApiResponse.success(users).toResponseEntity();
     }
 
     @GetMapping("/id/{userId}")
-    public ResponseEntity getUserById(@PathVariable UUID userId) {
+    public ResponseEntity<ApiResponse<User>> getUserById(@PathVariable UUID userId) {
         User user = userService.getUserById(userId);
-        return ResponseEntity.ok().body(new ApiResponse(
-                true,
-                "Successfully fetched the user",
-                user
-        ));
+        return ApiResponse.success(user).toResponseEntity();
     }
 
 
     @GetMapping("/email/{email}")
-    public ResponseEntity getUserByEmail(@PathVariable String email) {
+    public ResponseEntity<ApiResponse<User>> getUserByEmail(@PathVariable String email) {
         User user = userService.getUserByEmail(email);
-        return ResponseEntity.ok().body(new ApiResponse(
-                true,
-                "Successfully fetched the user",
-                user
-        ));
+        return ApiResponse.success(user).toResponseEntity();
     }
 
     @PostMapping("/create-invite-user")
-    public ResponseEntity createUser(@RequestBody CreateUserDTO createUserDTO) {
+    public ResponseEntity<ApiResponse<User>> createUser(@RequestBody CreateUserDTO createUserDTO) {
         User user = userService.createUser(createUserDTO);
-        return ResponseEntity.ok().body(new ApiResponse(
-                true,
-                "Successfully created the user",
-                user
-        ));
+        return ApiResponse.success(user).toResponseEntity();
     }
 
     // inviting and creating the user
     @PostMapping("/create")
-    public ResponseEntity inviteUser(@RequestBody InviteUserDTO inviteUserDTO) {
+    public ResponseEntity<ApiResponse<User>> inviteUser(@RequestBody InviteUserDTO inviteUserDTO) {
         User user = userService.inviteUser(inviteUserDTO);
-        return ResponseEntity.ok().body(new ApiResponse(
-                true,
-                "Successfully invited the user",
-                user
-        ));
+        return ApiResponse.success(user).toResponseEntity();
     }
 
     // code validation
     @PostMapping("/is-code-valid")
-    public ResponseEntity validateUser(@RequestParam String email , @RequestParam String token) {
+    public ResponseEntity<ApiResponse<Boolean>> validateUser(@RequestParam String email , @RequestParam String token) {
         boolean isValid = userService.isUserInvited(email, token);
-        return ResponseEntity.ok().body(new ApiResponse(
-                true,
-                "Successfully validated the user",
-                isValid
-        ));
+        return ApiResponse.success(isValid).toResponseEntity();
     }
 
     @PostMapping("/create-admin")
-    public ResponseEntity createAdmin(@RequestBody CreateAdminDTO createAdminDTO) {
+    public ResponseEntity<ApiResponse<User>> createAdmin(@RequestBody CreateAdminDTO createAdminDTO) {
         User user = userService.createAdmin(createAdminDTO);
-        return ResponseEntity.ok().body(
-                new ApiResponse(
-                        true,
-                        "Successfully created the admin",
-                        user
-                )
-        );
+        return ApiResponse.success(user).toResponseEntity();
     }
 
     @PatchMapping("/update/{userId}")
-    public ResponseEntity updateUser(@PathVariable UUID userId, @RequestBody UpdateUserDTO updateUserDTO) {
+    public ResponseEntity<ApiResponse<User>> updateUser(@PathVariable UUID userId, @RequestBody UpdateUserDTO updateUserDTO) {
         User user = userService.updateUser(userId, updateUserDTO);
-        return ResponseEntity.ok(new ApiResponse(
-                true,
-                "Successfully updated the user",
-                user
-        ));
+        return ApiResponse.success(user).toResponseEntity();
     }
 
     @DeleteMapping("/delete/{userId}")
-    public ResponseEntity deleteUser(@PathVariable UUID userId) {
+    public ResponseEntity<ApiResponse<User>> deleteUser(@PathVariable UUID userId) {
         User user = userService.deleteUser(userId);
-        return ResponseEntity.ok(new ApiResponse(
-                true,
-                "Successfully deleted the user",
-                user
-        ));
+        return ApiResponse.success(user).toResponseEntity();
     }
 
 }
